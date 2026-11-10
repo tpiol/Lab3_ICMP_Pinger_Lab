@@ -48,7 +48,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):  # waits for the reply to m
         icmpHeader = recPacket[20:28]  # skip the 20-byte IP header and grab the 8-byte ICMP header
         icmpType, code, icmpChecksum, packetID, sequence = struct.unpack("bbHHh", icmpHeader)  # turn those 8 bytes back into type, code, checksum, ID, sequence
 
-        if icmpType == 0 and packetID == ID:  # only keep it if it's an echo reply (type 0) AND it's a reply to MY ping
+        if icmpType == 0 and code == 0 and packetID == ID:  # only keep it if it's an echo reply (type 0, code 0) AND it's a reply to MY ping
             timeSent = struct.unpack("d", recPacket[28:36])[0]  # read the send time that sendOnePing hid in the data (8 bytes after the header)
             delay = (timeReceived - timeSent) * 1000  # RTT = time received minus time sent, times 1000 to get milliseconds
             return (delay, (icmpType, code, icmpChecksum, packetID, sequence, timeSent))  # give back the delay and all the ICMP fields like Gradescope wants
