@@ -113,4 +113,4 @@ def ping(host, timeout=1):  # the main ping function that Gradescope tests
     return resps  # give back the list of all 5 results
 
 if __name__ == '__main__':  # only runs when I run this file myself (not when Gradescope imports it)
-    print(ping("127.0.0.1"))  # ping my own computer first to test, then change this to a far-away site
+    print(ping("www.ust.hk"))  # ping website
